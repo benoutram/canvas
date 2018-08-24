@@ -12,16 +12,26 @@
             let context = canvas.getContext('2d')
         
             // populate it with whatever you want, including dynamic text
-            context.fillStyle = 'rgb(200, 0, 0)';
-            context.fillRect(0, 0, 250, 50)
-
             context.fillStyle = 'rgb(0, 0, 200, 0.5)';
-            context.fillRect(5, 5, 250, 50)
+            context.fillRect(0, 0, 250, 50)
 
             context.fillStyle = '#fff';
             context.font = '16pt Roboto Condensed';
             context.textBaseline = 'top';
             context.fillText('Canvas demo', 15, 15);
+
+            // get the image data
+            let imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+            let d = imageData.data
+
+            for(let i = 0; i < d.length; i += 4) {
+                var offset = 5;
+                //for the red channel, take the value of the pixel 5 spots in advance. If it doesn't exist, put 0.
+                d[i] = d[i+4*offset] == undefined ? 0 : d[i+4*offset];
+            }
+            
+            // repopulate the drawing context with the affected data
+            context.putImageData(imageData, 0, 0);
         </script>
     </body>
 </html>

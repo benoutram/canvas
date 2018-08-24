@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    </head>
+    <body>
+        <script>
+            // get the canvas element
+            let baseCanvas = document.createElement('canvas');
+            baseCanvas.width = 200;
+            baseCanvas.height = 150;
+
+            // get a 2d drawing context
+            let baseCtx = baseCanvas.getContext('2d');
+        
+            // populate it with whatever you want, including dynamic text
+            baseCtx.fillStyle = 'rgb(0, 0, 200, 0.5)';
+            baseCtx.fillRect(0, 0, 250, 50)
+
+            baseCtx.fillStyle = '#fff';
+            baseCtx.font = '16pt Roboto Condensed';
+            baseCtx.textBaseline = 'top';
+            baseCtx.fillText('Canvas demo', 15, 15);
+
+            // get the image data
+            let imageData = baseCtx.getImageData(0, 0, baseCanvas.width, baseCanvas.height)
+            let d = imageData.data
+
+            for(let i = 0; i < d.length; i += 4) {
+                var offset = 5;
+                //for the red channel, take the value of the pixel 5 spots in advance. If it doesn't exist, put 0.
+                d[i] = d[i+4*offset] == undefined ? 0 : d[i+4*offset];
+            }
+            
+            // repopulate the drawing context with the affected data
+            baseCtx.putImageData(imageData, 0, 0);
+
+            // create a canvas half the size of the original
+            var canvas = document.createElement('canvas');
+            canvas.width = 100;
+            canvas.height = 75;
+            var context = canvas.getContext('2d');
+            
+            // draw the base canvas onto it
+            context.drawImage(baseCanvas, 0, 0);
+        
+            // // display it
+            document.body.appendChild(canvas);
+
+            // and do it again
+            var canvas2 = document.createElement('canvas');
+            canvas2.style.display = 'block';
+            canvas2.width = 100;
+            canvas2.height = 75;
+            var context2 = canvas2.getContext('2d');
+            
+            // shift the reference over halfway this time
+            context2.drawImage(baseCanvas, -100, 0);
+            document.body.appendChild(canvas2);
+        </script>
+    </body>
+</html>
