@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    </head>
+    <body>
+        <canvas id="dest-canvas" height="300" width="400"></canvas>
+        <script>
+            // get the canvas element
+            let destCanvas = document.getElementById('dest-canvas')
+
+            // get a 2d drawing context
+            let context = destCanvas.getContext('2d')
+        
+            // populate it with whatever you want, including dynamic text
+            context.fillStyle = 'rgb(200, 0, 0)';
+            context.fillRect(0, 0, 250, 50)
+
+            context.fillStyle = 'rgb(0, 0, 200, 0.5)';
+            context.fillRect(5, 5, 250, 50)
+
+            context.fillStyle = '#fff';
+            context.font = '16pt Roboto Condensed';
+            context.textBaseline = 'top';
+            context.fillText('Canvas demo', 15, 15);
+        </script>
+    </body>
+</html>
